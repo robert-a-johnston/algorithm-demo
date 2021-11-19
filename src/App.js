@@ -13,7 +13,7 @@ function App() {
         <main>
         <Routes>
           <Route
-          path='/sort'
+            path='/sort'
             element={<SortDisplay/>}/>
         </Routes>
         </main>
