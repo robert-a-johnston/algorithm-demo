@@ -1,23 +1,5 @@
-/* .topNavbar {
-  font-size: 3rem;
-  } */
-  /* .nav-link {
+
+  /* .header {
     display: flex;
-    overflow-wrap: normal;
-    margin: auto;
-    color: blue;
-  }
-  .nav-link:hover {
-    background: rgba(29, 224, 22, 0.5);
-    border-radius: 5px;
-  }
-  .add-margin {
-    margin-left: 250px;
-  }
-  span {
-    color: blue;
+    justify-content: space-evenly;
   } */
-  .container {
-    display: flex;
-    align-content: center;
-  }

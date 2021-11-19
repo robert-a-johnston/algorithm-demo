@@ -1,8 +1,9 @@
 import React, {Fragment} from 'react';
 import { Routes, Route } from 'react-router-dom'
 import './App.css';
-import Header from './components/Header/Header'
+import Header from './components/header/Header'
 import SortDisplay from './components/sort-display/SortDisplay';
+import Graph from './components/path-finder/graph/Graph'
 
 
 function App() {
@@ -15,7 +16,11 @@ function App() {
           <Route
             path='/sort'
             element={<SortDisplay/>}/>
-        </Routes>
+        
+          <Route
+            path='/path'
+            element={<Graph/>}/>
+          </Routes>
         </main>
       </Fragment>
     </div>

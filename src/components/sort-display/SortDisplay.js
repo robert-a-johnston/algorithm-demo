@@ -92,9 +92,7 @@ export default class SortDisplay extends React.Component {
 
     return (
       <div>
-        
-        <div className="array-container">
-        <div>
+        <div className="buttons">
         <button onClick={() => this.resetArray()}>Generate New Array</button>
           <button onClick={() => this.mergeSort()}>Merge Sort</button>
           <button onClick={() => this.quickSort()}>Quick Sort</button>
@@ -102,6 +100,8 @@ export default class SortDisplay extends React.Component {
           <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
           {/* <button onClick={() => this.testSortingAlgorithms()}></button> */}
         </div>
+        <div className="array-container">
+        
           {array.map((value, idx) => (
             <div
               className="array-bar"

@@ -7,15 +7,16 @@ import './Header.css'
 
 
 const Header = () => (
-  <Navbar bg="light" expand="lg">
-  <Container id="container">
-    <Navbar.Brand>Algorithm Demo</Navbar.Brand>
-      <Nav className="me-auto">
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/sort">Sorter</NavLink>
-      </Nav>
-  </Container>
-</Navbar>
+  <div className="header">
+    <Navbar>
+      <Navbar.Brand>Algorithm Demo</Navbar.Brand>
+        <Nav>
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/sort">Sorter</NavLink>
+          <NavLink to="/path">Pathfinder</NavLink>
+        </Nav>
+    </Navbar>
+  </div>
 )
 
 export default Header
