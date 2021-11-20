@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 
-import './Node.css';
+import './Node.css'
 
 export default class Node extends Component {
   render() {
@@ -13,14 +13,14 @@ export default class Node extends Component {
       onMouseEnter,
       onMouseUp,
       row,
-    } = this.props;
+    } = this.props
     const extraClassName = isFinish
       ? 'node-finish'
       : isStart
       ? 'node-start'
       : isWall
       ? 'node-wall'
-      : '';
+      : ''
 
     return (
       <div
@@ -29,6 +29,6 @@ export default class Node extends Component {
         onMouseDown={() => onMouseDown(row, col)}
         onMouseEnter={() => onMouseEnter(row, col)}
         onMouseUp={() => onMouseUp()}></div>
-    );
+    )
   }
 }
