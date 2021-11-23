@@ -1,48 +1,356 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import Node from '../node/Node'
-import {dijkstra, getNodesInShortestPathOrder} from '../../../algorithms/Dijkstra'
+import { dijkstra } from '../../../algorithms/Dijkstra'
+import { AStar } from '../../../algorithms/AStar'
+import { dfs } from '../../../algorithms/DepthFirstSearch'
+import { bfs } from '../../../algorithms/BreathFirstSearch'
 
 import './Graph.css'
 
-const START_NODE_ROW = 1
-const START_NODE_COL = 1
-const FINISH_NODE_ROW = 8
-const FINISH_NODE_COL = 8
-const NUMBER_OF_ROWS = 10
-const NUMBER_OF_COLUMNS = 10
-
-export default class graph extends Component {
+export default class Graph extends Component {
   constructor() {
     super()
     this.state = {
       grid: [],
+      START_NODE_ROW: 1,
+      FINISH_NODE_ROW: 1,
+      START_NODE_COL: 1,
+      FINISH_NODE_COL: 4,
       mouseIsPressed: false,
+      ROW_COUNT: 15,
+      COLUMN_COUNT: 5,
+      isRunning: false,
+      isStartNode: false,
+      isFinishNode: false,
+      isWallNode: false, 
+      currRow: 0,
+      currCol: 0,
+      isDesktopView: true,
     }
+
+    this.handleMouseDown = this.handleMouseDown.bind(this)
+    this.handleMouseLeave = this.handleMouseLeave.bind(this)
+    this.toggleIsRunning = this.toggleIsRunning.bind(this)
   }
 
   componentDidMount() {
-    console.log('grid', this.grid)
-    const grid = getInitialGrid()
-    
+    const grid = this.getInitialGrid()
     this.setState({grid})
   }
 
+  toggleIsRunning() {
+    this.setState({isRunning: !this.state.isRunning})
+  }
+
+  // toggleView() {
+  //   if (!this.state.isRunning) {
+  //     this.clearGrid()
+  //     this.clearWalls()
+  //     const isDesktopView = !this.state.isDesktopView
+  //     let grid
+  //     if (isDesktopView) {
+  //       grid = this.getInitialGrid(
+  //         this.state.ROW_COUNT,
+  //         this.state.COLUMN_COUNT,
+  //       )
+  //       this.setState({isDesktopView, grid})
+  //     } else {
+  //       if (
+  //         this.state.START_NODE_ROW > this.state.MOBILE_ROW_COUNT ||
+  //         this.state.FINISH_NODE_ROW > this.state.MOBILE_ROW_COUNT ||
+  //         this.state.START_NODE_COL > this.state.MOBILE_COLUMN_COUNT ||
+  //         this.state.FINISH_NODE_COL > this.state.MOBILE_COLUMN_COUNT
+  //       ) {
+  //         alert('Start & Finish Nodes Must Be within 10 Rows x 20 Columns')
+  //       } else {
+  //         grid = this.getInitialGrid(
+  //           this.state.MOBILE_ROW_COUNT,
+  //           this.state.MOBILE_COLUMN_COUNT,
+  //         )
+  //         this.setState({isDesktopView, grid})
+  //       }
+  //     }
+  //   }
+  // }
+
+  // Create initial grid with number of rows and columns
+  getInitialGrid = (
+    rowCount = this.state.ROW_COUNT,
+    colCount = this.state.COLUMN_COUNT,
+  ) => {
+    const initialGrid = []
+    for (let row = 0; row < rowCount; row++) {
+      const currentRow = []
+      for (let col = 0; col < colCount; col++) {
+        currentRow.push(this.createNode(row, col))
+      }
+      initialGrid.push(currentRow)
+    }
+    return initialGrid
+  }
+
+  // Creates node with row and column values
+  createNode = (row, col) => {
+    return {
+      row,
+      col,
+      isStart:
+        row === this.state.START_NODE_ROW && col === this.state.START_NODE_COL,
+      isFinish:
+        row === this.state.FINISH_NODE_ROW &&
+        col === this.state.FINISH_NODE_COL,
+      distance: Infinity,
+      distanceToFinishNode:
+        Math.abs(this.state.FINISH_NODE_ROW - row) +
+        Math.abs(this.state.FINISH_NODE_COL - col),
+      isVisited: false,
+      isWall: false,
+      previousNode: null,
+      isNode: true,
+    }
+  }
+
+ // What happens when you click down on mouse
   handleMouseDown(row, col) {
-    const newGrid = getNewGridWithWallToggled(this.state.grid, row, col)
-    this.setState({grid: newGrid, mouseIsPressed: true})
+    // check to make sure animation is not running
+    if (!this.state.isRunning) {
+      // check to see if grid is clear
+      if (this.isGridClear()) {
+        // determines if start node
+        if (
+          document.getElementById(`node-${row}-${col}`).className ===
+          'node node-start'
+        ) {
+          // selects if click on start node allowing change of start
+          this.setState({
+            mouseIsPressed: true,
+            isStartNode: true,
+            currRow: row,
+            currCol: col,
+          })
+          // determines of finish node
+        } else if (
+          document.getElementById(`node-${row}-${col}`).className ===
+          'node node-finish'
+        ) {
+          this.setState({
+            mouseIsPressed: true,
+            isFinishNode: true,
+            currRow: row,
+            currCol: col,
+          })
+        } else {
+          const newGrid = getNewGridWithWallToggled(this.state.grid, row, col)
+          this.setState({
+            grid: newGrid,
+            mouseIsPressed: true,
+            isWallNode: true,
+            currRow: row,
+            currCol: col,
+          })
+        }
+      } else {
+        // resets grid if path search has run and click down on mouse
+        this.clearGrid()
+      }
+    }
+  }
+
+  isGridClear() {
+    // traverse rows of grid
+    for (const row of this.state.grid) {
+      // traverse columns of grid
+      for (const node of row) {
+        const nodeClassName = document.getElementById(
+          `node-${node.row}-${node.col}`,
+        ).className
+        if (
+          nodeClassName === 'node node-visited' ||
+          nodeClassName === 'node node-shortest-path'
+        ) {
+          return false
+        }
+      }
+    }
+    return true
   }
 
   handleMouseEnter(row, col) {
-    if (!this.state.mouseIsPressed) return
-    const newGrid = getNewGridWithWallToggled(this.state.grid, row, col)
-    this.setState({grid: newGrid})
+    if (!this.state.isRunning) {
+      if (this.state.mouseIsPressed) {
+        const nodeClassName = document.getElementById(`node-${row}-${col}`)
+          .className
+        if (this.state.isStartNode) {
+          if (nodeClassName !== 'node node-wall') {
+            const prevStartNode = this.state.grid[this.state.currRow][
+              this.state.currCol
+            ]
+            prevStartNode.isStart = false
+            document.getElementById(
+              `node-${this.state.currRow}-${this.state.currCol}`,
+            ).className = 'node'
+
+            this.setState({currRow: row, currCol: col})
+            const currStartNode = this.state.grid[row][col]
+            currStartNode.isStart = true
+            document.getElementById(`node-${row}-${col}`).className =
+              'node node-start'
+          }
+          this.setState({START_NODE_ROW: row, START_NODE_COL: col})
+        } else if (this.state.isFinishNode) {
+          if (nodeClassName !== 'node node-wall') {
+            const prevFinishNode = this.state.grid[this.state.currRow][
+              this.state.currCol
+            ]
+            prevFinishNode.isFinish = false
+            document.getElementById(
+              `node-${this.state.currRow}-${this.state.currCol}`,
+            ).className = 'node'
+
+            this.setState({currRow: row, currCol: col})
+            const currFinishNode = this.state.grid[row][col]
+            currFinishNode.isFinish = true
+            document.getElementById(`node-${row}-${col}`).className =
+              'node node-finish'
+          }
+          this.setState({FINISH_NODE_ROW: row, FINISH_NODE_COL: col})
+        } else if (this.state.isWallNode) {
+          const newGrid = getNewGridWithWallToggled(this.state.grid, row, col)
+          this.setState({grid: newGrid})
+        }
+      }
+    }
   }
 
-  handleMouseUp() {
-    this.setState({mouseIsPressed: false})
+  handleMouseUp(row, col) {
+    if (!this.state.isRunning) {
+      this.setState({mouseIsPressed: false})
+      if (this.state.isStartNode) {
+        const isStartNode = !this.state.isStartNode
+        this.setState({isStartNode, START_NODE_ROW: row, START_NODE_COL: col})
+      } else if (this.state.isFinishNode) {
+        const isFinishNode = !this.state.isFinishNode
+        this.setState({
+          isFinishNode,
+          FINISH_NODE_ROW: row,
+          FINISH_NODE_COL: col,
+        })
+      }
+      this.getInitialGrid()
+    }
   }
 
-  animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder) {
+  handleMouseLeave() {
+    if (this.state.isStartNode) {
+      const isStartNode = !this.state.isStartNode
+      this.setState({isStartNode, mouseIsPressed: false})
+    } else if (this.state.isFinishNode) {
+      const isFinishNode = !this.state.isFinishNode
+      this.setState({isFinishNode, mouseIsPressed: false})
+    } else if (this.state.isWallNode) {
+      const isWallNode = !this.state.isWallNode
+      this.setState({isWallNode, mouseIsPressed: false})
+      this.getInitialGrid()
+    }
+  }
+
+  /******************** Clear Board/Walls ********************/
+
+  clearGrid() {
+    if (!this.state.isRunning) {
+      const newGrid = this.state.grid.slice()
+      for (const row of newGrid) {
+        for (const node of row) {
+          let nodeClassName = document.getElementById(
+            `node-${node.row}-${node.col}`,
+          ).className
+          if (
+            nodeClassName !== 'node node-start' &&
+            nodeClassName !== 'node node-finish' &&
+            nodeClassName !== 'node node-wall'
+          ) {
+            document.getElementById(`node-${node.row}-${node.col}`).className =
+              'node'
+            node.isVisited = false
+            node.distance = Infinity
+            node.distanceToFinishNode =
+              Math.abs(this.state.FINISH_NODE_ROW - node.row) +
+              Math.abs(this.state.FINISH_NODE_COL - node.col)
+          }
+          if (nodeClassName === 'node node-finish') {
+            node.isVisited = false
+            node.distance = Infinity
+            node.distanceToFinishNode = 0
+          }
+          if (nodeClassName === 'node node-start') {
+            node.isVisited = false
+            node.distance = Infinity
+            node.distanceToFinishNode =
+              Math.abs(this.state.FINISH_NODE_ROW - node.row) +
+              Math.abs(this.state.FINISH_NODE_COL - node.col)
+            node.isStart = true
+            node.isWall = false
+            node.previousNode = null
+            node.isNode = true
+          }
+        }
+      }
+    }
+  }
+
+  clearWalls() {
+    if (!this.state.isRunning) {
+      const newGrid = this.state.grid.slice()
+      for (const row of newGrid) {
+        for (const node of row) {
+          let nodeClassName = document.getElementById(
+            `node-${node.row}-${node.col}`,
+          ).className
+          if (nodeClassName === 'node node-wall') {
+            document.getElementById(`node-${node.row}-${node.col}`).className =
+              'node'
+            node.isWall = false
+          }
+        }
+      }
+    }
+  }
+
+  /******************** Create Animations ********************/
+  visualize(algo) {
+    if (!this.state.isRunning) {
+      this.clearGrid()
+      this.toggleIsRunning()
+      const {grid} = this.state
+      const startNode =
+        grid[this.state.START_NODE_ROW][this.state.START_NODE_COL]
+      const finishNode =
+        grid[this.state.FINISH_NODE_ROW][this.state.FINISH_NODE_COL]
+      let visitedNodesInOrder
+      switch (algo) {
+        case 'Dijkstra':
+          visitedNodesInOrder = dijkstra(grid, startNode, finishNode)
+          break
+        case 'AStar':
+          visitedNodesInOrder = AStar(grid, startNode, finishNode)
+          break
+        case 'BFS':
+          visitedNodesInOrder = bfs(grid, startNode, finishNode)
+          break
+        case 'DFS':
+          visitedNodesInOrder = dfs(grid, startNode, finishNode)
+          break
+        default:
+          // should never get here
+          break
+      }
+      const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode)
+      nodesInShortestPathOrder.push('end')
+      this.animate(visitedNodesInOrder, nodesInShortestPathOrder)
+    }
+  }
+
+  animate(visitedNodesInOrder, nodesInShortestPathOrder) {
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
@@ -52,114 +360,149 @@ export default class graph extends Component {
       }
       setTimeout(() => {
         const node = visitedNodesInOrder[i]
-        document.getElementById(`node-${node.row}-${node.col}`).className =
-          'node node-visited'
+        const nodeClassName = document.getElementById(
+          `node-${node.row}-${node.col}`,
+        ).className
+        if (
+          nodeClassName !== 'node node-start' &&
+          nodeClassName !== 'node node-finish'
+        ) {
+          document.getElementById(`node-${node.row}-${node.col}`).className =
+            'node node-visited'
+        }
       }, 10 * i)
     }
   }
 
+  /******************** Create path from start to finish ********************/
   animateShortestPath(nodesInShortestPathOrder) {
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
-      setTimeout(() => {
-        const node = nodesInShortestPathOrder[i]
-        document.getElementById(`node-${node.row}-${node.col}`).className =
-          'node node-shortest-path'
-      }, 50 * i)
+      if (nodesInShortestPathOrder[i] === 'end') {
+        setTimeout(() => {
+          this.toggleIsRunning()
+        }, i * 50)
+      } else {
+        setTimeout(() => {
+          const node = nodesInShortestPathOrder[i]
+          const nodeClassName = document.getElementById(
+            `node-${node.row}-${node.col}`,
+          ).className
+          if (
+            nodeClassName !== 'node node-start' &&
+            nodeClassName !== 'node node-finish'
+          ) {
+            document.getElementById(`node-${node.row}-${node.col}`).className =
+              'node node-shortest-path'
+          }
+        }, i * 40)
+      }
     }
-  }
-
-  visualizeDijkstra() {
-    const {grid} = this.state
-    const startNode = grid[START_NODE_ROW][START_NODE_COL]
-    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL]
-    const visitedNodesInOrder = dijkstra(grid, startNode, finishNode)
-    const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode)
-    this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder)
-  }
-
-  resetGrid() {
-    console.log('in reset', this.grid)
-    const grid = getInitialGrid()
-    console.log('grid', grid)
-    this.setState({grid})
-    console.log(this.grid)
-    
   }
 
   render() {
     const {grid, mouseIsPressed} = this.state
-
     return (
-      <>
-        <button onClick={() => this.visualizeDijkstra()}>
-          Visualize Dijkstra's Algorithm
+      <div>
+        <button
+          type="button"
+          className="btn btn-danger"
+          onClick={() => this.clearGrid()}>
+          Clear Grid
         </button>
-        <button onClick={() => this.resetGrid()}>
-          Reset Grid
-          </button>
-        <div className="grid">
-          {grid.map((row, rowIdx) => {
-            return (
-              <div key={rowIdx}>
-                {row.map((node, nodeIdx) => {
-                  const {row, col, isFinish, isStart, isWall} = node
-                  return (
-                    <Node
-                      key={nodeIdx}
-                      col={col}
-                      isFinish={isFinish}
-                      isStart={isStart}
-                      isWall={isWall}
-                      mouseIsPressed={mouseIsPressed}
-                      onMouseDown={(row, col) => this.handleMouseDown(row, col)}
-                      onMouseEnter={(row, col) =>
-                        this.handleMouseEnter(row, col)
-                      }
-                      onMouseUp={() => this.handleMouseUp()}
-                      row={row}></Node>
-                  )
-                })}
-              </div>
-            )
-          })}
-        </div>
-      </>
+        <button
+          type="button"
+          className="btn btn-warning"
+          onClick={() => this.clearWalls()}>
+          Clear Walls
+        </button>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => this.visualize('Dijkstra')}>
+          Dijkstra's
+        </button>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => this.visualize('AStar')}>
+          A*
+        </button>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => this.visualize('BFS')}>
+          Bread First Search
+        </button>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => this.visualize('DFS')}>
+          Depth First Search
+        </button>
+
+        <table
+          className="grid-container"
+          onMouseLeave={() => this.handleMouseLeave()}>
+          <tbody className="grid">
+            {grid.map((row, rowIdx) => {
+              return (
+                <tr key={rowIdx}>
+                  {row.map((node, nodeIdx) => {
+                    const {row, col, isFinish, isStart, isWall} = node
+                    return (
+                      <Node
+                        key={nodeIdx}
+                        col={col}
+                        isFinish={isFinish}
+                        isStart={isStart}
+                        isWall={isWall}
+                        mouseIsPressed={mouseIsPressed}
+                        onMouseDown={(row, col) =>
+                          this.handleMouseDown(row, col)
+                        }
+                        onMouseEnter={(row, col) =>
+                          this.handleMouseEnter(row, col)
+                        }
+                        onMouseUp={() => this.handleMouseUp(row, col)}
+                        row={row}></Node>
+                    )
+                  })}
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+        
+        
+        
+      </div>
     )
   }
 }
 
-const getInitialGrid = () => {
-  const grid = []
-  for (let row = 0; row < NUMBER_OF_ROWS; row++) {
-    const currentRow = []
-    for (let col = 0; col < NUMBER_OF_COLUMNS; col++) {
-      currentRow.push(createNode(col, row))
-    }
-    grid.push(currentRow)
-  }
-  return grid
-}
-
-const createNode = (col, row) => {
-  return {
-    col,
-    row,
-    isStart: row === START_NODE_ROW && col === START_NODE_COL,
-    isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
-    distance: Infinity,
-    isVisited: false,
-    isWall: false,
-    previousNode: null,
-  }
-}
-
+/******************** Create Walls ********************/
 const getNewGridWithWallToggled = (grid, row, col) => {
+  // mouseDown starts to act strange if I don't make newGrid and work off of grid instead.
   const newGrid = grid.slice()
   const node = newGrid[row][col]
-  const newNode = {
-    ...node,
-    isWall: !node.isWall,
+  if (!node.isStart && !node.isFinish && node.isNode) {
+    const newNode = {
+      ...node,
+      isWall: !node.isWall,
+    }
+    newGrid[row][col] = newNode
   }
-  newGrid[row][col] = newNode
   return newGrid
+}
+
+// Backtracks from the finishNode to find the shortest path.
+// Only works when called after the pathfinding methods.
+function getNodesInShortestPathOrder(finishNode) {
+  const nodesInShortestPathOrder = []
+  let currentNode = finishNode
+  while (currentNode !== null) {
+    nodesInShortestPathOrder.unshift(currentNode)
+    currentNode = currentNode.previousNode
+  }
+  return nodesInShortestPathOrder
 }
