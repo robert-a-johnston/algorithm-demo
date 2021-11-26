@@ -18,7 +18,7 @@ export default class Graph extends Component {
       FINISH_NODE_COL: 4,
       mouseIsPressed: false,
       ROW_COUNT: 15,
-      COLUMN_COUNT: 5,
+      COLUMN_COUNT: 15,
       isRunning: false,
       isStartNode: false,
       isFinishNode: false,
@@ -32,7 +32,8 @@ export default class Graph extends Component {
     this.handleMouseLeave = this.handleMouseLeave.bind(this)
     this.toggleIsRunning = this.toggleIsRunning.bind(this)
   }
-
+  // occurs when page loads
+  // create initial grid and set state
   componentDidMount() {
     const grid = this.getInitialGrid()
     this.setState({grid})
@@ -42,36 +43,6 @@ export default class Graph extends Component {
     this.setState({isRunning: !this.state.isRunning})
   }
 
-  // toggleView() {
-  //   if (!this.state.isRunning) {
-  //     this.clearGrid()
-  //     this.clearWalls()
-  //     const isDesktopView = !this.state.isDesktopView
-  //     let grid
-  //     if (isDesktopView) {
-  //       grid = this.getInitialGrid(
-  //         this.state.ROW_COUNT,
-  //         this.state.COLUMN_COUNT,
-  //       )
-  //       this.setState({isDesktopView, grid})
-  //     } else {
-  //       if (
-  //         this.state.START_NODE_ROW > this.state.MOBILE_ROW_COUNT ||
-  //         this.state.FINISH_NODE_ROW > this.state.MOBILE_ROW_COUNT ||
-  //         this.state.START_NODE_COL > this.state.MOBILE_COLUMN_COUNT ||
-  //         this.state.FINISH_NODE_COL > this.state.MOBILE_COLUMN_COUNT
-  //       ) {
-  //         alert('Start & Finish Nodes Must Be within 10 Rows x 20 Columns')
-  //       } else {
-  //         grid = this.getInitialGrid(
-  //           this.state.MOBILE_ROW_COUNT,
-  //           this.state.MOBILE_COLUMN_COUNT,
-  //         )
-  //         this.setState({isDesktopView, grid})
-  //       }
-  //     }
-  //   }
-  // }
 
   // Create initial grid with number of rows and columns
   getInitialGrid = (
