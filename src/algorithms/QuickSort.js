@@ -1,56 +1,44 @@
-export function quickSortAnimations(items) {
-    console.log('in qsa')
-    const copy = [...items]
+export function quickSortAnimations(arr) {
+    const copy = [...arr]
     const animations = []
-    quickSort(copy, 0, copy.length - 1, animations)
+    quickSortHelper(copy, 0, copy.length - 1, animations)
+    console.log(copy)
     return animations
-}
-
-
-
-function quickSort(items, start, end, animations) {
-    console.log('in qs')
-    if(start >= end) {
-        return
+  }
+  
+  function quickSortHelper(arr, left, right, animations) {
+    if (right <= left) return
+    const part = partition(arr, left, right, animations)
+    quickSortHelper(arr, left, part, animations)
+    quickSortHelper(arr, part + 1, right, animations)
+  }
+  
+  function partition(arr, left, right, animations) {
+    let i = left
+    let j = right + 1
+    const pivot = arr[left]
+    while (true) {
+      while (arr[++i] <= pivot) {
+        if (i === right) break
+        animations.push([[i], false])
+      }
+      while (arr[--j] >= pivot) {
+        if (j === left) break
+        animations.push([[j], false])
+      }
+      if (j <= i) break
+      animations.push([[i, arr[j]], true])
+      animations.push([[j, arr[i]], true])
+      swap(arr, i, j)
     }
-    let index = partition(items, start, end, animations)
-    console.log('index', index)
-    // quickSort(items, start, index, animations)
-    // quickSort(items, index + 1, end, animations)
+    animations.push([[left, arr[j]], true])
+    animations.push([[j, arr[left]], true])
+    swap(arr, left, j)
+    return j
   }
 
-
-function partition(items, start, end, animations) {
-    console.log('in par')
- let pivotIndexI = start
- let pivotIndexJ = end + 1
-
- const pivotValue = items[start] // sets pivot value to first value
- console.log('par', pivotValue, pivotIndexI, pivotIndexJ)
- while(true) {
-     while(items[++pivotIndexI] <= pivotValue) {
-        if(pivotIndexI === end) break
-        animations.push([[pivotIndexI], false])
-     }
-     while (items[--pivotIndexJ] >= pivotValue) {
-         if(pivotIndexJ === start) break
-         animations.push([[pivotIndexJ], false])
-     }
-     if(pivotIndexJ <= pivotIndexI) break
-     animations.push([[pivotIndexI, items[pivotIndexJ]], true])
-     animations.push([[pivotIndexJ, items[pivotIndexI]], true])
-     swap(items, pivotIndexI, pivotIndexJ)
-     return pivotIndexJ
- }
-}
-
-
-function swap(items, leftIndex, rightIndex){
-    console.log('in swap')
-    let temp = items[leftIndex]
-    items[leftIndex] = items[rightIndex]
-    items[rightIndex] = temp
+  function swap(arr, index1, index2) {
+    const temp = arr[index1]
+    arr[index1] = arr[index2]
+    arr[index2] = temp
   }
-
-
-
