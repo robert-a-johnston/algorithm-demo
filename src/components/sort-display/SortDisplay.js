@@ -1,24 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react'
 // import { getMergeSortAnimations } from '../../algorithms/MergeSort'
-// import { quickSortAnimations } from '../../algorithms/QuickSort'
+import { quickSortAnimations } from '../../algorithms/QuickSort'
 import './SortDisplay.css'
 
 const MAX_VALUE = 50
 const MIN_VALUE = 5
 const ARRAY_LENGTH = MAX_VALUE - MIN_VALUE
+const DELAY = 10
+const PRIMARY_COLOR = 'green'
+const SECONDARY_COLOR = 'red'
 
 
 
 export default function SortDisplay() {
   const [intArr, setIntArr] = useState([])
   const containerRef = useRef(null)
-  const [sorting, setSorting] = useState(false)
-  const [sorted, setSorted] = useState(false)
+ 
   
   useEffect(createArray, [])
 
+  // CREATE RANDOM ARRAY OF INTEGERS
   // Create new array of integers
   function createArray() {
+    resetArrayColour()
     const tempArr = []
     let arrayValue = MIN_VALUE
     // create array of values from min to max
@@ -35,13 +39,82 @@ export default function SortDisplay() {
   }
 
   // Fisher-Yates algorithm to randomize array items
-  const shuffleArray = (array) => {
+  function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      const temp = array[i];
-      array[i] = array[j];
-      array[j] = temp;
+      const j = Math.floor(Math.random() * (i + 1))
+      const temp = array[i]
+      array[i] = array[j]
+      array[j] = temp
     }
+  }
+  // ANIMATION FUNCTIONS
+  function animateArrayUpdate(animations) {
+    
+    animations.forEach(([comparison, swapped], index) => {
+      setTimeout(() => {
+        if (!swapped) {
+          if (comparison.length === 2) {
+            const [i, j] = comparison
+            animateArrayAccess(i)
+            animateArrayAccess(j)
+          } else {
+            const [i] = comparison
+            animateArrayAccess(i)
+          }
+        } else {
+          setIntArr((prevArr) => {
+            const [k, newValue] = comparison
+            const newArr = [...prevArr]
+            newArr[k] = newValue
+            return newArr
+          })
+        }
+      }, index * DELAY)
+    })
+    setTimeout(() => {
+      animateSortedArray()
+    }, animations.length * DELAY)
+  }
+
+  function animateArrayAccess(index) {
+    const arrayBars = containerRef.current.children
+    const arrayBarStyle = arrayBars[index].style
+    setTimeout(() => {
+      arrayBarStyle.backgroundColor = SECONDARY_COLOR
+    }, DELAY)
+    setTimeout(() => {
+      arrayBarStyle.backgroundColor = ''
+    }, DELAY * 2)
+  }
+
+  function animateSortedArray() {
+    const arrayBars = containerRef.current.children
+    for (let i = 0; i < arrayBars.length; i++) {
+      const arrayBarStyle = arrayBars[i].style
+      setTimeout(
+        () => (arrayBarStyle.backgroundColor = PRIMARY_COLOR),
+        i * DELAY,
+      )
+    }
+    setTimeout(() => {
+     
+    }, arrayBars.length * DELAY)
+  }
+
+  function resetArrayColour() {
+    const arrayBars = containerRef.current.children
+    for (let i = 0; i < intArr.length; i++) {
+      const arrayBarStyle = arrayBars[i].style
+      arrayBarStyle.backgroundColor = ''
+    }
+  }
+
+  // SORTING FUNCTIONS
+  // quickSort
+  function quickSort() {
+    const animations = quickSortAnimations(intArr)
+    console.log(animations)
+    animateArrayUpdate(animations)
   }
 
   return (
@@ -53,6 +126,12 @@ export default function SortDisplay() {
           onClick={createArray}>
             Create/Reset Array
         </button>
+        <button
+          className="buttons"
+          id="quick-sort"
+          onClick={quickSort}>
+            QuickSort
+          </button>
       </div>
       <div className="array-bar-container" ref={containerRef}>
         {intArr.map((barHeight, index) => (
@@ -63,7 +142,7 @@ export default function SortDisplay() {
             width: `${100 / ARRAY_LENGTH}vw`,
           }}
           key={index}
-          >{barHeight}</div>
+          >{barHeight - MIN_VALUE + 1}</div>
         ))}
         
       </div>
