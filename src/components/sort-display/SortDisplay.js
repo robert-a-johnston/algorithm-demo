@@ -1,128 +1,73 @@
-import React from 'react'
-import {getMergeSortAnimations} from '../../algorithms/MergeSort'
+import React, { useState, useEffect, useRef } from 'react'
+// import { getMergeSortAnimations } from '../../algorithms/MergeSort'
+// import { quickSortAnimations } from '../../algorithms/QuickSort'
 import './SortDisplay.css'
 
-const ANIMATION_SPEED_MS = 1
-const NUMBER_OF_ARRAY_BARS = 200
-const PRIMARY_COLOR = 'blue'
-const SECONDARY_COLOR = 'red'
+const MAX_VALUE = 50
+const MIN_VALUE = 5
+const ARRAY_LENGTH = MAX_VALUE - MIN_VALUE
 
-export default class SortDisplay extends React.Component {
-  constructor(props) {
-    super(props)
 
-    this.state = {
-      array: [],
+
+export default function SortDisplay() {
+  const [intArr, setIntArr] = useState([])
+  const containerRef = useRef(null)
+  const [sorting, setSorting] = useState(false)
+  const [sorted, setSorted] = useState(false)
+  
+  useEffect(createArray, [])
+
+  // Create new array of integers
+  function createArray() {
+    const tempArr = []
+    let arrayValue = MIN_VALUE
+    // create array of values from min to max
+    for(let i = 0; i < ARRAY_LENGTH; i++) {
+      
+      tempArr.push(arrayValue)
+      arrayValue++
+    }
+    // shuffle values in array
+    shuffleArray(tempArr)
+    // set state of intArray to tempArray
+    setIntArr(tempArr)
+    console.log('int', intArr)
+  }
+
+  // Fisher-Yates algorithm to randomize array items
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
     }
   }
 
-  componentDidMount() {
-    this.resetArray()
-  }
-
-  resetArray() {
-    const array = []
-    for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
-      array.push(randomIntFromInterval(5, 300))
-    }
-    this.setState({array})
-  }
-
-  mergeSort() {
-    const animations = getMergeSortAnimations(this.state.array)
-    for (let i = 0; i < animations.length; i++) {
-      const arrayBars = document.getElementsByClassName('array-bar')
-      const isColorChange = i % 3 !== 2
-      if (isColorChange) {
-        const [barOneIdx, barTwoIdx] = animations[i]
-        const barOneStyle = arrayBars[barOneIdx].style
-        const barTwoStyle = arrayBars[barTwoIdx].style
-        const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR
-        setTimeout(() => {
-          barOneStyle.backgroundColor = color
-          barTwoStyle.backgroundColor = color
-        }, i * ANIMATION_SPEED_MS)
-      } else {
-        setTimeout(() => {
-          const [barOneIdx, newHeight] = animations[i]
-          const barOneStyle = arrayBars[barOneIdx].style
-          barOneStyle.height = `${newHeight}px`
-        }, i * ANIMATION_SPEED_MS)
-      }
-    }
-  }
-
-  quickSort() {
-    // We leave it as an exercise to the viewer of this code to implement this method.
-  }
-
-  heapSort() {
-    // We leave it as an exercise to the viewer of this code to implement this method.
-  }
-
-  bubbleSort() {
-    // We leave it as an exercise to the viewer of this code to implement this method.
-  }
-
-  // NOTE: This method will only work if your sorting algorithms actually return
-  // the sorted arrays if they return the animations (as they currently do), then
-  // this method will be broken.
-  // testSortingAlgorithms() {
-  //   for (let i = 0 i < 100 i++) {
-  //     const array = []
-  //     const length = randomIntFromInterval(1, 1000)
-  //     for (let i = 0 i < length i++) {
-  //       array.push(randomIntFromInterval(-1000, 1000))
-  //     }
-  //     const javaScriptSortedArray = array.slice().sort((a, b) => a - b)
-  //     const mergeSortedArray = getMergeSortAnimations(array.slice())
-  //     console.log(arraysAreEqual(javaScriptSortedArray, mergeSortedArray))
-  //   }
-  // }
-
-  render() {
-    const {array} = this.state
-
-    return (
-      <div>
-        <div className="buttons">
-        <button onClick={() => this.resetArray()}>Generate New Array</button>
-          <button onClick={() => this.mergeSort()}>Merge Sort</button>
-          <button onClick={() => this.quickSort()}>Quick Sort</button>
-          <button onClick={() => this.heapSort()}>Heap Sort</button>
-          <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
-          {/* <button onClick={() => this.testSortingAlgorithms()}></button> */}
-        </div>
-        <div className="array-container">
-        
-          {array.map((value, idx) => (
-            <div
-              className="array-bar"
-              key={idx}
-              style={{
-                backgroundColor: PRIMARY_COLOR,
-                height: `${value}px`,
-              }}></div>
-          ))}
-          
-        </div>
+  return (
+    <div className="display-container">
+      <div className="buttons">
+        <button 
+          className="button" 
+          id="create-array"
+          onClick={createArray}>
+            Create/Reset Array
+        </button>
       </div>
-    )
-  }
-}
+      <div className="array-bar-container" ref={containerRef}>
+        {intArr.map((barHeight, index) => (
+          <div
+          className="array-bar"
+          style={{
+            height: `${barHeight}vmin`,
+            width: `${100 / ARRAY_LENGTH}vw`,
+          }}
+          key={index}
+          >{barHeight}</div>
+        ))}
+        
+      </div>
 
-// From https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
-function randomIntFromInterval(min, max) {
-  // min and max included
-  return Math.floor(Math.random() * (max - min + 1) + min)
+    </div>
+  )
 }
-
-// function arraysAreEqual(arrayOne, arrayTwo) {
-//   if (arrayOne.length !== arrayTwo.length) return false
-//   for (let i = 0 i < arrayOne.length i++) {
-//     if (arrayOne[i] !== arrayTwo[i]) {
-//       return false
-//     }
-//   }
-//   return true
-// }

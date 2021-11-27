@@ -1,15 +1,17 @@
-.array-container {
-  position: absolute;
-  left: 5%;
-  right: 5%;
-  margin-top: 5%;
-  flex-wrap: nowrap;
+.display-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.array-bar-container {
+  display: flex;
+  align-items: flex-end;
 }
 
 .array-bar {
-  width: 2px;
-  display: inline-block;
-  margin: 0 1px;
+ background-color: rgb(35, 35, 175);
+ border-radius: 0.3em;
+ margin: 0.15%
 }
 .buttons {
   margin: 20px;
