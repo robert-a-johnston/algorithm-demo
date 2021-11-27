@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 // import { getMergeSortAnimations } from '../../algorithms/MergeSort'
-import { quickSortAnimations } from '../../algorithms/QuickSort'
+import { quickSortAnimations } from '../../algorithms/sorts/QuickSort'
+import { createArray } from './create-array/CreateArray'
 import './SortDisplay.css'
 
 const MAX_VALUE = 50
 const MIN_VALUE = 5
 const ARRAY_LENGTH = MAX_VALUE - MIN_VALUE
-const DELAY = 10
+const DELAY = 5
 const PRIMARY_COLOR = 'green'
 const SECONDARY_COLOR = 'red'
 
@@ -16,37 +17,10 @@ export default function SortDisplay() {
   const [intArr, setIntArr] = useState([])
   const containerRef = useRef(null)
  
-  
-  useEffect(createArray, [])
+  // on load creates new array
+  useEffect(() => setIntArr(createArray(MIN_VALUE, ARRAY_LENGTH, containerRef, intArr)), [])
 
-  // CREATE RANDOM ARRAY OF INTEGERS
-  // Create new array of integers
-  function createArray() {
-    resetArrayColour()
-    const tempArr = []
-    let arrayValue = MIN_VALUE
-    // create array of values from min to max
-    for(let i = 0; i < ARRAY_LENGTH; i++) {
-      
-      tempArr.push(arrayValue)
-      arrayValue++
-    }
-    // shuffle values in array
-    shuffleArray(tempArr)
-    // set state of intArray to tempArray
-    setIntArr(tempArr)
-    console.log('int', intArr)
-  }
 
-  // Fisher-Yates algorithm to randomize array items
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      const temp = array[i]
-      array[i] = array[j]
-      array[j] = temp
-    }
-  }
   // ANIMATION FUNCTIONS
   function animateArrayUpdate(animations) {
     
@@ -101,19 +75,11 @@ export default function SortDisplay() {
     }, arrayBars.length * DELAY)
   }
 
-  function resetArrayColour() {
-    const arrayBars = containerRef.current.children
-    for (let i = 0; i < intArr.length; i++) {
-      const arrayBarStyle = arrayBars[i].style
-      arrayBarStyle.backgroundColor = ''
-    }
-  }
 
   // SORTING FUNCTIONS
   // quickSort
   function quickSort() {
     const animations = quickSortAnimations(intArr)
-    console.log(animations)
     animateArrayUpdate(animations)
   }
 
@@ -123,7 +89,7 @@ export default function SortDisplay() {
         <button 
           className="button" 
           id="create-array"
-          onClick={createArray}>
+          onClick={() => setIntArr(createArray(MIN_VALUE, ARRAY_LENGTH, containerRef, intArr))}>
             Create/Reset Array
         </button>
         <button
@@ -143,10 +109,9 @@ export default function SortDisplay() {
           }}
           key={index}
           >{barHeight - MIN_VALUE + 1}</div>
-        ))}
-        
+        ))} 
       </div>
-
+      <div>some more info</div>
     </div>
   )
 }

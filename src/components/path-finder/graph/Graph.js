@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import Node from '../node/Node'
-import { dijkstra } from '../../../algorithms/Dijkstra'
-import { AStar } from '../../../algorithms/AStar'
-import { dfs } from '../../../algorithms/DepthFirstSearch'
-import { bfs } from '../../../algorithms/BreathFirstSearch'
+import { dijkstra } from '../../../algorithms/searches/Dijkstra'
+import { AStar } from '../../../algorithms/searches/AStar'
+import { dfs } from '../../../algorithms/searches/DepthFirstSearch'
+import { bfs } from '../../../algorithms/searches/BreathFirstSearch'
 
 import './Graph.css'
 
