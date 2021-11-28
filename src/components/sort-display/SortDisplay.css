@@ -3,6 +3,7 @@
   flex-direction: column;
   min-height: 100vh;
 }
+
 .array-bar-container {
   display: flex;
   align-items: flex-end;
@@ -11,8 +12,10 @@
 .array-bar {
  background-color: rgb(35, 35, 175);
  border-radius: 0.3em;
- margin: 0.15%
+ margin: 0.15%;
 }
-.buttons {
-  margin: 20px;
+
+.button-container {
+  display: flex;
+  justify-content: center;
 }

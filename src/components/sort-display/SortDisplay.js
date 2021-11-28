@@ -1,29 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react'
-// import { getMergeSortAnimations } from '../../algorithms/MergeSort'
+import { getMergeSortAnimations } from '../../algorithms/sorts/MergeSort'
 import { quickSortAnimations } from '../../algorithms/sorts/QuickSort'
-import { createArray } from './create-array/CreateArray'
+import { createArray, getArrayLength, getMinValue } from './create-array-functions/CreateArray'
 import './SortDisplay.css'
 
-const MAX_VALUE = 50
-const MIN_VALUE = 5
-const ARRAY_LENGTH = MAX_VALUE - MIN_VALUE
-const DELAY = 5
+const DELAY = 200
 const PRIMARY_COLOR = 'green'
 const SECONDARY_COLOR = 'red'
 
-
+const quickSortInfo = ' some information about quicksort'
+const mergeSortInfo = ' some information about mergesort'
 
 export default function SortDisplay() {
   const [intArr, setIntArr] = useState([])
+  const [info, setInfo] = useState('')
   const containerRef = useRef(null)
  
   // on load creates new array
-  useEffect(() => setIntArr(createArray(MIN_VALUE, ARRAY_LENGTH, containerRef, intArr)), [])
+  useEffect(() => setIntArr(createArray(containerRef, intArr)), [])
 
 
   // ANIMATION FUNCTIONS
-  function animateArrayUpdate(animations) {
-    
+  function animateArrayUpdate(animations) { 
     animations.forEach(([comparison, swapped], index) => {
       setTimeout(() => {
         if (!swapped) {
@@ -74,30 +72,50 @@ export default function SortDisplay() {
      
     }, arrayBars.length * DELAY)
   }
+  // on click functions
+  function onClickSetIntArr() {
+    setInfo('')
+    setIntArr(createArray(containerRef, intArr))
+  }
 
+  
 
   // SORTING FUNCTIONS
+  // mergeSort
+  function mergeSort() {
+    setInfo(mergeSortInfo)
+    const animations = getMergeSortAnimations(intArr)
+    animateArrayUpdate(animations)
+  }
   // quickSort
   function quickSort() {
+    setInfo(quickSortInfo)
     const animations = quickSortAnimations(intArr)
     animateArrayUpdate(animations)
   }
 
+
   return (
     <div className="display-container">
-      <div className="buttons">
+      <div className="button-container">
         <button 
           className="button" 
           id="create-array"
-          onClick={() => setIntArr(createArray(MIN_VALUE, ARRAY_LENGTH, containerRef, intArr))}>
+          onClick={() => onClickSetIntArr()}>
             Create/Reset Array
         </button>
         <button
-          className="buttons"
+          className="button"
+          id="merge-sort"
+          onClick={mergeSort}>
+            MergeSort
+        </button>
+        <button
+          className="button"
           id="quick-sort"
           onClick={quickSort}>
             QuickSort
-          </button>
+          </button>  
       </div>
       <div className="array-bar-container" ref={containerRef}>
         {intArr.map((barHeight, index) => (
@@ -105,13 +123,14 @@ export default function SortDisplay() {
           className="array-bar"
           style={{
             height: `${barHeight}vmin`,
-            width: `${100 / ARRAY_LENGTH}vw`,
+            width: `${100 / getArrayLength()}vw`,
+            color: 'white',
           }}
           key={index}
-          >{barHeight - MIN_VALUE + 1}</div>
+          >{barHeight - getMinValue() + 1}</div>
         ))} 
       </div>
-      <div>some more info</div>
+      <div className="info">{info}</div>
     </div>
   )
 }
