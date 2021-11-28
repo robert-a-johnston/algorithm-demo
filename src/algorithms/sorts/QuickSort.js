@@ -1,14 +1,14 @@
 export function quickSortAnimations(arr) {
-    const copy = [...arr]
+    const copyArray = [...arr]
     const animations = []
-    quickSortHelper(copy, 0, copy.length - 1, animations)
-    console.log(copy)
+    quickSortHelper(copyArray, 0, copyArray.length - 1, animations)
     return animations
   }
   
   function quickSortHelper(arr, left, right, animations) {
     if (right <= left) return
     const part = partition(arr, left, right, animations)
+    
     quickSortHelper(arr, left, part, animations)
     quickSortHelper(arr, part + 1, right, animations)
   }
@@ -17,6 +17,7 @@ export function quickSortAnimations(arr) {
     let i = left
     let j = right + 1
     const pivot = arr[left]
+    console.log('pivot', i, pivot)
     while (true) {
       while (arr[++i] <= pivot) {
         if (i === right) break
