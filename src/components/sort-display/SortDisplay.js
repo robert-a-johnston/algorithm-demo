@@ -2,19 +2,23 @@ import React, { useState, useEffect, useRef } from 'react'
 import { getMergeSortAnimations } from '../../algorithms/sorts/MergeSort'
 import { quickSortAnimations } from '../../algorithms/sorts/QuickSort'
 import { createArray, getArrayLength, getMinValue } from './create-array-functions/CreateArray'
+// import { quickSortInfo } from '../../algorithms/info/SortInfo'
+import SortInfo from '../../algorithms/info/SortInfo'
 import './SortDisplay.css'
 
-const DELAY = 200
+const DELAY = 20
 const PRIMARY_COLOR = 'green'
 const SECONDARY_COLOR = 'red'
-
-const quickSortInfo = ' some information about quicksort'
 const mergeSortInfo = ' some information about mergesort'
+
 
 export default function SortDisplay() {
   const [intArr, setIntArr] = useState([])
   const [info, setInfo] = useState('')
   const containerRef = useRef(null)
+  const [disabled, setDisabled] = useState(false)
+  const [sorting, setSorting] = useState(false)
+  const [sorted, setSorted] = useState(false)
  
   // on load creates new array
   useEffect(() => setIntArr(createArray(containerRef, intArr)), [])
@@ -22,6 +26,8 @@ export default function SortDisplay() {
 
   // ANIMATION FUNCTIONS
   function animateArrayUpdate(animations) { 
+    if(sorting) return
+    setSorting(true)
     animations.forEach(([comparison, swapped], index) => {
       setTimeout(() => {
         if (!swapped) {
@@ -70,12 +76,18 @@ export default function SortDisplay() {
     }
     setTimeout(() => {
      
+     setSorted(true)
+     setSorting(false)
     }, arrayBars.length * DELAY)
   }
+
   // on click functions
   function onClickSetIntArr() {
     setInfo('')
-    setIntArr(createArray(containerRef, intArr))
+    setSorted(true)
+    console.log(sorted)
+    setIntArr(createArray(containerRef, intArr, sorting, sorted))
+    setDisabled(false)
   }
 
   
@@ -83,15 +95,21 @@ export default function SortDisplay() {
   // SORTING FUNCTIONS
   // mergeSort
   function mergeSort() {
+    if(sorting) return
+    if(sorted) onClickSetIntArr()
     setInfo(mergeSortInfo)
     const animations = getMergeSortAnimations(intArr)
     animateArrayUpdate(animations)
   }
   // quickSort
   function quickSort() {
-    setInfo(quickSortInfo)
+    setDisabled(true)
+    console.log(disabled)
+    if(sorting) return
+    setInfo(SortInfo)
     const animations = quickSortAnimations(intArr)
     animateArrayUpdate(animations)
+    
   }
 
 
@@ -107,13 +125,15 @@ export default function SortDisplay() {
         <button
           className="button"
           id="merge-sort"
-          onClick={mergeSort}>
+          onClick={mergeSort}
+          disabled={disabled}>
             MergeSort
         </button>
         <button
           className="button"
           id="quick-sort"
-          onClick={quickSort}>
+          onClick={quickSort}
+          disabled={disabled}>
             QuickSort
           </button>  
       </div>
@@ -130,7 +150,7 @@ export default function SortDisplay() {
           >{barHeight - getMinValue() + 1}</div>
         ))} 
       </div>
-      <div className="info">{info}</div>
+      <code className="info">{info}</code>
     </div>
   )
 }

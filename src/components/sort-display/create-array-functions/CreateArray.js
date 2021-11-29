@@ -1,13 +1,14 @@
 import { shuffleArray } from "./ShuffleArray"
 import { resetArrayColour } from "./ResetArrayColor"
-const MAX_VALUE = 25
+const MAX_VALUE = 55
 const MIN_VALUE = 5
 const ARRAY_LENGTH = MAX_VALUE - MIN_VALUE
 
 // Create new array of integers
-export function createArray(containerRef, intArr) {
+export function createArray(containerRef, intArr, sorting, sorted) {
+  if(sorting) return
   // resets to original color when new array created
-  resetArrayColour(containerRef, intArr)
+  if(sorted) resetArrayColour(containerRef, intArr)
   // variables for use to create array of
   // numbers from minValue to end of arrayLength
   const tempArr = []
