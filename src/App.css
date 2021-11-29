@@ -3,4 +3,15 @@
   text-align: center;
   font-family: 'Fredoka One';
 }
+button {
+  border-radius: 20%;
+  box-shadow: 0 9px #999;
+  cursor: pointer;
+}
 
+button:hover {background-color: #7acc81}
+button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}

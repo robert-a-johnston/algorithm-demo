@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+.algo-pic {
+  width: 40%;
+}
+.algo-info {
+  width: 60%;
+}
