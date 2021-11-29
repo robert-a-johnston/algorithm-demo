@@ -7,10 +7,11 @@
 .array-bar-container {
   display: flex;
   align-items: flex-end;
+  margin: 5%;
 }
 
 .array-bar {
- background-color: rgb(35, 35, 175);
+ background-color: rgb(30, 110, 156);
  border-radius: 0.3em;
  margin: 0.15%;
 }
@@ -20,4 +21,8 @@
   justify-content: center;
   margin: 10px;
 
+}
+.info{
+  margin-left: 5%;
+  margin-right: 5%;
 }

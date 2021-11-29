@@ -5,10 +5,9 @@ const MIN_VALUE = 5
 const ARRAY_LENGTH = MAX_VALUE - MIN_VALUE
 
 // Create new array of integers
-export function createArray(containerRef, intArr, sorting, sorted) {
-  if(sorting) return
+export function createArray(containerRef, intArr) {
   // resets to original color when new array created
-  if(sorted) resetArrayColour(containerRef, intArr)
+  resetArrayColour(containerRef, intArr)
   // variables for use to create array of
   // numbers from minValue to end of arrayLength
   const tempArr = []
