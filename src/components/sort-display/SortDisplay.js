@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from 'react'
 import { getMergeSortAnimations } from '../../algorithms/sorts/MergeSort'
 import { quickSortAnimations } from '../../algorithms/sorts/QuickSort'
 import { createArray, getArrayLength, getMinValue } from './create-array-functions/CreateArray'
-// import { quickSortInfo } from '../../algorithms/info/SortInfo'
-import SortInfo from '../../algorithms/info/SortInfo'
+import QuickSortInfo from '../../algorithms/info/quick-sort/QuickSortInfo'
+import MergeSortInfo from '../../algorithms/info/merge-sort/MergeSort'
 import './SortDisplay.css'
 
 const DELAY = 20
 const PRIMARY_COLOR = 'green'
 const SECONDARY_COLOR = 'red'
-const mergeSortInfo = ' some information about mergesort'
+
 
 
 export default function SortDisplay() {
@@ -17,8 +17,8 @@ export default function SortDisplay() {
   const [info, setInfo] = useState('')
   const containerRef = useRef(null)
   const [disabled, setDisabled] = useState(false)
-  const [sorting, setSorting] = useState(false)
-  const [sorted, setSorted] = useState(false)
+  const [disableCreate, setDisableCreate] = useState(false)
+  
  
   // on load creates new array
   useEffect(() => setIntArr(createArray(containerRef, intArr)), [])
@@ -26,8 +26,6 @@ export default function SortDisplay() {
 
   // ANIMATION FUNCTIONS
   function animateArrayUpdate(animations) { 
-    if(sorting) return
-    setSorting(true)
     animations.forEach(([comparison, swapped], index) => {
       setTimeout(() => {
         if (!swapped) {
@@ -75,19 +73,16 @@ export default function SortDisplay() {
       )
     }
     setTimeout(() => {
-     
-     setSorted(true)
-     setSorting(false)
+     setDisableCreate(false)
     }, arrayBars.length * DELAY)
   }
 
-  // on click functions
+  // ON CLICK FUNCTIONS
   function onClickSetIntArr() {
     setInfo('')
-    setSorted(true)
-    console.log(sorted)
-    setIntArr(createArray(containerRef, intArr, sorting, sorted))
     setDisabled(false)
+    setIntArr(createArray(containerRef, intArr))
+    setDisableCreate(false)
   }
 
   
@@ -95,18 +90,17 @@ export default function SortDisplay() {
   // SORTING FUNCTIONS
   // mergeSort
   function mergeSort() {
-    if(sorting) return
-    if(sorted) onClickSetIntArr()
-    setInfo(mergeSortInfo)
+    setDisabled(true)
+    setDisableCreate(true)
+    setInfo(MergeSortInfo)
     const animations = getMergeSortAnimations(intArr)
     animateArrayUpdate(animations)
   }
   // quickSort
   function quickSort() {
     setDisabled(true)
-    console.log(disabled)
-    if(sorting) return
-    setInfo(SortInfo)
+    setDisableCreate(true)
+    setInfo(QuickSortInfo)
     const animations = quickSortAnimations(intArr)
     animateArrayUpdate(animations)
     
@@ -119,7 +113,8 @@ export default function SortDisplay() {
         <button 
           className="button" 
           id="create-array"
-          onClick={() => onClickSetIntArr()}>
+          onClick={() => onClickSetIntArr()}
+          disabled={disableCreate}>
             Create/Reset Array
         </button>
         <button

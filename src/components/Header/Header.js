@@ -10,9 +10,9 @@ const Header = () => (
     <Navbar>
       <Navbar.Brand>Algorithm Demo</Navbar.Brand>
         <Nav>
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/sort">Sorter</NavLink>
-          <NavLink to="/path">Pathfinder</NavLink>
+          <NavLink className="nav-link" to="/">Home</NavLink>
+          <NavLink className="nav-link" to="/sort">Sorter</NavLink>
+          <NavLink className="nav-link" to="/path">Pathfinder</NavLink>
         </Nav>
     </Navbar>
   </div>
