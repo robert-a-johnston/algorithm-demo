@@ -6,14 +6,22 @@ import quickSortAlgo from '../../algo-images/quickSortAlgo.JPG'
 export default function QuickSortInfo() {
   return (
     <div>
-      <h3>QuickSort Algorithm</h3>
+      <h2>QuickSort Algorithm</h2>
+      
       <div className="container">
+
           <div className="algo-pic">
             <img className="quicksort-img" src={quickSortAlgo} alt="Quick Sort Algorithm"></img>     
           </div>
+
         <div className="algo-info">
-          <h4>Time/Space Complexity</h4>
-          <p>Average Time: O(n log(n)) Worst Time: O(n^2) Space: O(log(n))</p><br></br>
+          <h3>Time/Space Complexity</h3>
+          <ul>
+            <li>Average Time: O(n log(n))</li>  
+            <li>Worst Time: O(n^2)</li>
+            <li>Space: O(log(n))</li>
+          </ul>
+
           <h4>Steps for QuickSort</h4>
           <ol>
             <li>Select pivot.  Can select any element(first/last/middle)</li>
