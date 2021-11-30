@@ -5,14 +5,22 @@ import mergeSortAlgo from '../../algo-images/mergeSortAlgo.JPG'
 export default function MergeSortInfo() {
   return (
     <div>
-      <h3>MergeSort Algorithm</h3>
+      <h2>MergeSort Algorithm</h2>
+
       <div className="container">
+        
           <div className="algo-pic">
             <img className="merge-sort-img" src={mergeSortAlgo} alt="Merge Sort Algorithm"></img>     
           </div>
         <div className="algo-info">
-          <h4>Time/Space Complexity</h4>
-          <p>Average Time: O(n log(n)) Worst Time: O(n log(n)) Space: O(n)</p><br></br>
+
+          <h3>Time/Space Complexity</h3>
+          <ul>
+            <li>Average Time: O(n log(n))</li>  
+            <li>Worst Time: O(n log(n))</li>
+            <li>Space: O(n)</li>
+          </ul>
+      
           <h4>Steps for MergeSort</h4>
           <ol>
             <li>Split given array in half.</li>
