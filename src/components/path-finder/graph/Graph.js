@@ -13,9 +13,9 @@ export default class Graph extends Component {
     this.state = {
       grid: [],
       START_NODE_ROW: 1,
-      FINISH_NODE_ROW: 1,
-      START_NODE_COL: 1,
-      FINISH_NODE_COL: 4,
+      FINISH_NODE_ROW: 12,
+      START_NODE_COL: 2,
+      FINISH_NODE_COL: 12,
       mouseIsPressed: false,
       ROW_COUNT: 15,
       COLUMN_COUNT: 15,
@@ -374,6 +374,11 @@ export default class Graph extends Component {
     const {grid, mouseIsPressed} = this.state
     return (
       <div>
+        <div>You  can move the start an end nodes by clicking and dragging the nodes within
+          the grid.
+        </div><br></br>
+        <div>You can create walls by clicking empty squares on the grid.  They will turn 
+          black.</div><br></br>
         <button
           type="button"
           className="btn btn-danger"
@@ -442,10 +447,7 @@ export default class Graph extends Component {
               )
             })}
           </tbody>
-        </table>
-        
-        
-        
+        </table>       
       </div>
     )
   }
@@ -467,7 +469,7 @@ const getNewGridWithWallToggled = (grid, row, col) => {
 }
 
 // Backtracks from the finishNode to find the shortest path.
-// Only works when called after the pathfinding methods.
+// Only works when called after the path-finding methods.
 function getNodesInShortestPathOrder(finishNode) {
   const nodesInShortestPathOrder = []
   let currentNode = finishNode
