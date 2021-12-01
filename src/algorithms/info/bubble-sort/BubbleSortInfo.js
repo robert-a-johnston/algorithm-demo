@@ -1,7 +1,7 @@
 
 import React from 'react'
 import './BubbleSortInfo.css'
-// import quickSortAlgo from '../../algo-images/quickSortAlgo.JPG'
+import bubbleSortAlgo from '../../algo-images/bubbleSortAlgo.JPG'
 
 export default function BubbleSortInfo() {
   return (
@@ -11,7 +11,7 @@ export default function BubbleSortInfo() {
       <div className="container">
 
           <div className="algo-pic">
-            {/* <img className="quicksort-img" src={quickSortAlgo} alt="Quick Sort Algorithm"></img>      */}
+            <img className="bubble-sort-img" src={bubbleSortAlgo} alt="Bubble Sort Algorithm"></img>     
           </div>
 
         <div className="algo-info">
@@ -24,16 +24,13 @@ export default function BubbleSortInfo() {
 
           <h4>Steps for BubbleSort</h4>
           <ol>
-            <li>Select pivot.  Can select any element(first/last/middle)</li>
-            <li>Start left pointer at first element and right pointer at last element.</li>
-            <li>Compare left pointer element with pivot element.</li>
-            <li>While left pointer element is less than pivot shift left pointer right one element.</li>
-            <li>While right pointer element is greater than pivot shift right pointer left one element.</li>
-            <li>Check if left pointer element is greater than right pointer element.</li>
-            <li>If left element is less than right pointer element swap left and right pointer values.</li>
-            <li>Add one to left pointer and subtract one from right pointer</li>
-            <li>If the index of the left pointer is less than the index of the right 
-              pointer repeat the process. If not return the index of the left pointer.</li>
+            <li>Start at first item in unsorted array.</li>
+            <li>Check if the next item is less than first item.</li>
+            <li>If the next item is less than the first swap items.</li>
+            <li>Continue checking if next value is greater or less than and switching when
+              value is less than.
+            </li>
+            <li>Continue iterating through all of the items in the array until sorted.</li>
           </ol>
 
         </div>
