@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+.algo-pic {
+  width: 40%;
+}
+.algo-info {
+  width: 60%;
+
+}
+.quicksort-img {
+  max-width: 100%;
+  max-height: 100%;
+}
+ul {
+  text-align: left;
+  list-style-type: none;
+}
+ol {
+  text-align: left;
+}

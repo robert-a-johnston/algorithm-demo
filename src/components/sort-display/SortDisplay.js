@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { getMergeSortAnimations } from '../../algorithms/sorts/MergeSort'
 import { quickSortAnimations } from '../../algorithms/sorts/QuickSort'
+import { bubbleSortAnimations } from '../../algorithms/sorts/BubbleSort'
 import { createArray, getArrayLength, getMinValue } from './create-array-functions/CreateArray'
 import QuickSortInfo from '../../algorithms/info/quick-sort/QuickSortInfo'
 import MergeSortInfo from '../../algorithms/info/merge-sort/MergeSort'
+import BubbleSortInfo from '../../algorithms/info/bubble-sort/BubbleSortInfo'
 import './SortDisplay.css'
 
-const DELAY = 20
+const DELAY = 10
 const PRIMARY_COLOR = 'green'
 const SECONDARY_COLOR = 'red'
 
@@ -53,6 +55,7 @@ export default function SortDisplay() {
   }
 
   function animateArrayAccess(index) {
+    
     const arrayBars = containerRef.current.children
     const arrayBarStyle = arrayBars[index].style
     setTimeout(() => {
@@ -62,7 +65,7 @@ export default function SortDisplay() {
       arrayBarStyle.backgroundColor = ''
     }, DELAY * 2)
   }
-
+  // sets color to green when sorted
   function animateSortedArray() {
     const arrayBars = containerRef.current.children
     for (let i = 0; i < arrayBars.length; i++) {
@@ -105,6 +108,14 @@ export default function SortDisplay() {
     animateArrayUpdate(animations)
     
   }
+  function bubbleSort() {
+    setDisabled(true)
+    setDisableCreate(true)
+    setInfo(BubbleSortInfo)
+    const animations = bubbleSortAnimations(intArr)
+    animateArrayUpdate(animations)
+    
+  }
 
 
   return (
@@ -130,6 +141,13 @@ export default function SortDisplay() {
           onClick={quickSort}
           disabled={disabled}>
             QuickSort
+          </button>  
+          <button
+          className="button"
+          id="bubble-sort"
+          onClick={bubbleSort}
+          disabled={disabled}>
+            BubbleSort
           </button>  
       </div>
       <div className="array-bar-container" ref={containerRef}>
