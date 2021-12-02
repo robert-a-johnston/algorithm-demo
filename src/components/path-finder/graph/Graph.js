@@ -373,6 +373,7 @@ export default class Graph extends Component {
   render() {
     const {grid, mouseIsPressed} = this.state
     return (
+
       <div className="main-container">
         <div className="instructions-container">
           <h4>Instructions</h4>
@@ -422,6 +423,7 @@ export default class Graph extends Component {
             Depth First Search
           </button>
         
+
         <table
           className="grid-container"
           onMouseLeave={() => this.handleMouseLeave()}>
