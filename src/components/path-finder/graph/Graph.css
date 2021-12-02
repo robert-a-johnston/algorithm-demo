@@ -1,10 +1,23 @@
+.main-container {
+  display: flex;
+  align-content: center;
+  margin-top: 5%;
+}
 .grid-container {
   margin: 1% auto;
 }
 
-/* .grid {
-  white-space: pre;
-} */
+.instructions-container{
+  margin-left: 10%;
+  margin-right: 5%;
+  width: 30%;
+}
+.instructions-list {
+  list-style-type: disc;
+}
+li{
+  margin-top: 2%;
+}
 
 button {
   margin: 5px;

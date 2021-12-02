@@ -373,49 +373,55 @@ export default class Graph extends Component {
   render() {
     const {grid, mouseIsPressed} = this.state
     return (
-      <div>
-        <div>You  can move the start an end nodes by clicking and dragging the nodes within
-          the grid.
-        </div><br></br>
-        <div>You can create walls by clicking empty squares on the grid.  They will turn 
-          black.</div><br></br>
-        <button
-          type="button"
-          className="btn btn-danger"
-          onClick={() => this.clearGrid()}>
-          Clear Grid
-        </button>
-        <button
-          type="button"
-          className="btn btn-warning"
-          onClick={() => this.clearWalls()}>
-          Clear Walls
-        </button>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => this.visualize('Dijkstra')}>
-          Dijkstra's
-        </button>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => this.visualize('AStar')}>
-          A*
-        </button>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => this.visualize('BFS')}>
-          Bread First Search
-        </button>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => this.visualize('DFS')}>
-          Depth First Search
-        </button>
-
+      <div className="main-container">
+        <div className="instructions-container">
+          <h4>Instructions</h4>
+        <ul className="instructions-list">
+          <li>You  can move the start an end nodes by clicking and dragging the nodes within
+            the grid.
+          </li>
+          <li>You can create walls by clicking empty squares on the grid.  They will turn 
+            black.</li>
+        </ul>
+        </div>
+        <div className="button-container-graph">
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={() => this.clearGrid()}>
+            Clear Grid
+          </button>
+          <button
+            type="button"
+            className="btn btn-warning"
+            onClick={() => this.clearWalls()}>
+            Clear Walls
+          </button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => this.visualize('Dijkstra')}>
+            Dijkstra's
+          </button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => this.visualize('AStar')}>
+            A*
+          </button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => this.visualize('BFS')}>
+            Bread First Search
+          </button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => this.visualize('DFS')}>
+            Depth First Search
+          </button>
+        
         <table
           className="grid-container"
           onMouseLeave={() => this.handleMouseLeave()}>
@@ -447,7 +453,8 @@ export default class Graph extends Component {
               )
             })}
           </tbody>
-        </table>       
+        </table> 
+        </div>     
       </div>
     )
   }

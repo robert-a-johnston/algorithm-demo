@@ -8,7 +8,7 @@ import MergeSortInfo from '../../algorithms/info/merge-sort/MergeSort'
 import BubbleSortInfo from '../../algorithms/info/bubble-sort/BubbleSortInfo'
 import './SortDisplay.css'
 
-const DELAY = 10
+const DELAY = 5
 const PRIMARY_COLOR = 'green'
 const SECONDARY_COLOR = 'red'
 
@@ -67,8 +67,10 @@ export default function SortDisplay() {
   }
   // sets color to green when sorted
   function animateSortedArray() {
+    
     const arrayBars = containerRef.current.children
-    for (let i = 0; i < arrayBars.length; i++) {
+    console.log(arrayBars)
+    for (let i = 0; i < arrayBars.length -1; i++) {
       const arrayBarStyle = arrayBars[i].style
       setTimeout(
         () => (arrayBarStyle.backgroundColor = PRIMARY_COLOR),
@@ -150,18 +152,23 @@ export default function SortDisplay() {
             BubbleSort
           </button>  
       </div>
+      
       <div className="array-bar-container" ref={containerRef}>
         {intArr.map((barHeight, index) => (
           <div
           className="array-bar"
           style={{
-            height: `${barHeight}vmin`,
+            height: `${barHeight}Vmin`,
             width: `${100 / getArrayLength()}vw`,
             color: 'white',
           }}
           key={index}
           >{barHeight - getMinValue() + 1}</div>
-        ))} 
+        ))}
+        <div 
+        className="array-bar-topper"
+        style={{height: `55vmin`,
+        width:`${100 / getArrayLength()}vw`}}></div>
       </div>
       <code className="info">{info}</code>
     </div>
