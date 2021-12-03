@@ -10,9 +10,9 @@ const Header = () => (
     <Navbar>
       <Navbar.Brand><h1>Algorithm Fun</h1></Navbar.Brand>
         <Nav>
-          <NavLink className="nav-link" to="/">Home</NavLink>
-          <NavLink className="nav-link" to="/sort">Sorter</NavLink>
-          <NavLink className="nav-link" to="/path">
+          <NavLink className="nav-link" to="algorithm-demo/">Home</NavLink>
+          <NavLink className="nav-link" to="algorithm-demo/sort">Sorter</NavLink>
+          <NavLink className="nav-link" to="algorithm-demo/path">
             <span className="span-link" onClick= {
               e=> { e.stopPropagation()}
             }>PathFinder</span>

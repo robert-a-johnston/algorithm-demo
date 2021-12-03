@@ -14,11 +14,11 @@ function App() {
         <main>
         <Routes>
           <Route
-            path='/sort'
+            path='algorithm-demo/sort'
             element={<SortDisplay/>}/>
         
           <Route
-            path='/path'
+            path='algorithm-demo/path'
             element={<Graph/>}/>
           </Routes>
         </main>
