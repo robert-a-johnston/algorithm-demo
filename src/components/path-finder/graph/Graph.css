@@ -1,16 +1,18 @@
 .main-container {
   display: flex;
   align-content: center;
-  margin-top: 5%;
+  margin-top: 1%;
 }
 .grid-container {
   margin: 1% auto;
 }
-
-.instructions-container{
-  margin-left: 10%;
+.info-box{
+  left: auto;
+}
+.left-side {
+  margin-left: 3%;
   margin-right: 5%;
-  width: 30%;
+  width: 40%;
 }
 .instructions-list {
   list-style-type: disc;

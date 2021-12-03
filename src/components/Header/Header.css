@@ -6,8 +6,8 @@
 a {
   margin: 10px;
 }
-span {
-  font-size: 50px;
+h1 {
+  font-size: 2em;
 }
 .nav-link{
   color: rgb(79, 169, 221);

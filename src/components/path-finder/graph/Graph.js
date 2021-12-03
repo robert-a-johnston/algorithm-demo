@@ -4,6 +4,11 @@ import { dijkstra } from '../../../algorithms/searches/Dijkstra'
 import { AStar } from '../../../algorithms/searches/AStar'
 import { dfs } from '../../../algorithms/searches/DepthFirstSearch'
 import { bfs } from '../../../algorithms/searches/BreathFirstSearch'
+import DijkstraInfo from '../../../algorithms/info/dijkstra/DijkstraInfo'
+import AstarInfo from '../../../algorithms/info/a-star/AstarInfo'
+import BreathFirstSearchInfo from '../../../algorithms/info/breath-first-search/BreathFirstSearchInfo'
+import DepthFirstSearchInfo from '../../../algorithms/info/depth-first-search/DepthFirstSearchInfo'
+
 
 import './Graph.css'
 
@@ -25,7 +30,7 @@ export default class Graph extends Component {
       isWallNode: false, 
       currRow: 0,
       currCol: 0,
-      isDesktopView: true,
+      info: '',
     }
 
     this.handleMouseDown = this.handleMouseDown.bind(this)
@@ -229,6 +234,7 @@ export default class Graph extends Component {
 
   clearGrid() {
     if (!this.state.isRunning) {
+      this.setState({info: ''})
       const newGrid = this.state.grid.slice()
       for (const row of newGrid) {
         for (const node of row) {
@@ -290,6 +296,7 @@ export default class Graph extends Component {
   /******************** Create Animations ********************/
   visualize(algo) {
     if (!this.state.isRunning) {
+      
       this.clearGrid()
       this.toggleIsRunning()
       const {grid} = this.state
@@ -300,15 +307,19 @@ export default class Graph extends Component {
       let visitedNodesInOrder
       switch (algo) {
         case 'Dijkstra':
+          this.setState({info: <DijkstraInfo></DijkstraInfo>})
           visitedNodesInOrder = dijkstra(grid, startNode, finishNode)
           break
         case 'AStar':
+          this.setState({info: <AstarInfo></AstarInfo>})
           visitedNodesInOrder = AStar(grid, startNode, finishNode)
           break
         case 'BFS':
+          this.setState({info: <BreathFirstSearchInfo></BreathFirstSearchInfo>})
           visitedNodesInOrder = bfs(grid, startNode, finishNode)
           break
         case 'DFS':
+          this.setState({info: <DepthFirstSearchInfo></DepthFirstSearchInfo>})
           visitedNodesInOrder = dfs(grid, startNode, finishNode)
           break
         default:
@@ -375,15 +386,9 @@ export default class Graph extends Component {
     return (
 
       <div className="main-container">
-        <div className="instructions-container">
-          <h4>Instructions</h4>
-        <ul className="instructions-list">
-          <li>You  can move the start an end nodes by clicking and dragging the nodes within
-            the grid.
-          </li>
-          <li>You can create walls by clicking empty squares on the grid.  They will turn 
-            black.</li>
-        </ul>
+        <div className="left-side">
+         
+          <div className="info-box">{this.state.info}</div>
         </div>
         <div className="button-container-graph">
           <button
@@ -414,7 +419,7 @@ export default class Graph extends Component {
             type="button"
             className="btn btn-primary"
             onClick={() => this.visualize('BFS')}>
-            Bread First Search
+            Breath First Search
           </button>
           <button
             type="button"
@@ -455,7 +460,17 @@ export default class Graph extends Component {
               )
             })}
           </tbody>
-        </table> 
+        </table>
+          <div className="instructions-container">
+            <h4>Instructions</h4>
+            <ul className="instructions-list">
+              <li>You  can move the start an end nodes by clicking and dragging the nodes within
+                the grid.
+              </li>
+              <li>You can create walls by clicking empty squares on the grid.  They will turn 
+                black.</li>
+            </ul>
+          </div> 
         </div>     
       </div>
     )
