@@ -8,7 +8,7 @@ import MergeSortInfo from '../../algorithms/info/merge-sort/MergeSort'
 import BubbleSortInfo from '../../algorithms/info/bubble-sort/BubbleSortInfo'
 import './SortDisplay.css'
 
-const DELAY = 5
+const DELAY = 15
 const PRIMARY_COLOR = 'green'
 const SECONDARY_COLOR = 'red'
 
