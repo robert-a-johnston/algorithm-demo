@@ -7,4 +7,9 @@ ul {
 }
 ol {
   text-align: left;
+  padding: 10px;
+ 
+}
+p{
+  text-align: left;
 }
