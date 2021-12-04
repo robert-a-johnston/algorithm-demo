@@ -17,8 +17,7 @@ const Header = () => (
               e=> { e.stopPropagation()}
             }>PathFinder</span> */}
           </NavLink>
-        </Nav>
-        
+        </Nav>     
     </Navbar>
   </div>
 )

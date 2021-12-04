@@ -14,21 +14,43 @@ export default function AstarInfo() {
           <p>* Depends on Implementation</p>
 
           <h4>Steps for A * Algorithm</h4>
-          <ol>
-            <li>Set all vertices distances = infinity except for the 
-              source vertex, set the source distance = 0.</li>
-            <li>Push the source vertex in a min-priority queue in the 
-              form (distance , vertex), as the comparison in the min-priority 
-              queue will be according to vertices distances.</li>
-            <li>Pop the vertex with the minimum distance from the priority 
-              queue (at first the popped vertex = source).</li>
-            <li>Update the distances of the connected vertices to the popped 
-              vertex in case of "current vertex distance + edge weight less 
-              than next vertex distance", then push the vertex
-              with the new distance to the priority queue.
+          <p>* Given a grid with many obstacles and a starting point and ending point </p>
+          <p>* g = the movement cost to move from the starting point to a given square on the grid,
+            following the path generated to get there.
+          </p>
+          <p>* h = the estimated movement cost to move from a given square on the grid to the final
+            destination.  (Sometimes referred to as the heuristic or smart guess.)
+          </p>
+          <p>* f = the sum of g and h</p>
+          <ol type="1">
+            <li>Create two lists named open and closed.</li>
+            <li>Put the starting node on the open list(can leave its f
+              at 0)
             </li>
-            <li>If the popped vertex is visited before, just continue without using it.</li>
-            <li>Apply the same algorithm again until the priority queue is empty.</li>
+            <li>While the open list is not empty</li>
+              <ol className="while" type="a"> 
+                <li>Find the node with the least f on the open list, q.</li>
+                <li>Generate q's 8 successors and set their parents to q.</li>
+
+                <li>For each successor:</li>
+                  <ol className="for-each" type="i">
+                    <li>If the successor is the goal, stop the search
+                      successor.g = q.g + distance between successor and q<br></br>
+                      successor.h = distance from goal to successors<br></br>
+                      successor.f = successor.g + successor.<br></br>
+                    </li>
+                    <li>If a node with the same position as successor is in the OPEN list
+                      which has a lower f than successor, skip this successor
+                    </li>
+                    <li>If a node with the same position as successor is in the CLOSED list
+                      which has a lower f than successor, skip this successor.  Otherwise, add
+                      the node to the open list.  
+                    </li>
+                    <li>End for loop.</li>
+                  </ol>
+                <li>Push q on the closed list</li>
+                <li>End while loop.</li>
+              </ol>
           </ol>
 
         </div>

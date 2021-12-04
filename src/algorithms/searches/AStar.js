@@ -3,18 +3,26 @@
 // by backtracking from the finish node.
 
 export function AStar(grid, startNode, finishNode) {
+  console.log('in astar')
+  // array of all visited nodes
   const visitedNodesInOrder = [];
+  // set start node distance to 0
   startNode.distance = 0;
-  const unvisitedNodes = getAllNodes(grid); // Q: different from using grid or slice of grid???
-
+  // array of all unvisited nodes
+  const unvisitedNodes = getAllNodes(grid); 
+  
+  // unvisitedNodes.length = 15 * 15 or size of graph
   while (unvisitedNodes.length) {
+    // get array of unvisited nodes by  sorted by distance
     sortByDistance(unvisitedNodes);
+    // pop top node from sorted unvisited nodes array
     const closestNode = unvisitedNodes.shift();
     // If we encounter a wall, we skip it.
     if (!closestNode.isWall) {
       // If the closest node is at a distance of infinity,
       // we must be trapped and should stop.
       if (closestNode.distance === Infinity) return visitedNodesInOrder;
+      
       closestNode.isVisited = true;
       visitedNodesInOrder.push(closestNode);
       if (closestNode === finishNode) return visitedNodesInOrder;
@@ -23,10 +31,13 @@ export function AStar(grid, startNode, finishNode) {
   }
 }
 
+// creates and returns array of all nodes
 function getAllNodes(grid) {
+  // nodes array
   const nodes = [];
   for (const row of grid) {
     for (const node of row) {
+      console.log(node)
       nodes.push(node);
     }
   }
@@ -34,6 +45,7 @@ function getAllNodes(grid) {
 }
 
 function sortByDistance(unvisitedNodes) {
+  // return sorted array of unvisited nodes by distance
   unvisitedNodes.sort((nodeA, nodeB) => nodeA.distance - nodeB.distance);
 }
 
