@@ -17,6 +17,10 @@ export default function DijkstraInfo() {
             <li>Worst Time: O(|V|^2)</li>
             <li>Worst Space: O(|V| + |E|)</li>
           </ul>
+          <h3>Requirements</h3>
+          <ul>
+            <li>Can only have positive weights.</li>
+          </ul>
           <h4>Steps for Dijkstra's Algorithm</h4>
           <ol>
             <li>Set all vertices distances = infinity except for the 
