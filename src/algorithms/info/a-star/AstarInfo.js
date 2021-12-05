@@ -11,7 +11,11 @@ export default function AstarInfo() {
       <div className="container">
         <div className="algo-info">
           <h3>Time/Space Complexity</h3>
-          <p>* Depends on Implementation</p>
+          <p>* Depends on Implementation.  E = # of edges, V = # of vertices</p>
+          <ul>
+            <li>Worst Time: O(E)</li>
+            <li>Worst Space: O(V)</li>
+          </ul>
 
           <h4>Steps for A * Algorithm</h4>
           <p>* Given a grid with many obstacles and a starting point and ending point </p>
