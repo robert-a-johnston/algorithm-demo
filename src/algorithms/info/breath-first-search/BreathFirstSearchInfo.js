@@ -11,9 +11,13 @@ export default function DijkstraInfo() {
       <div className="container">
         <div className="algo-info">
           <h3>Time/Space Complexity</h3>
-          <p>* Depends on Implementation</p>
+          <p>* V = vertices</p>
+          <ul>
+            <li>Worst Time: O(V)</li>
+            <li>Worst Space: O(V)</li>
+          </ul>
 
-          <h4>Steps for Dijkstra's Algorithm</h4>
+          <h4>Steps for Breath First Search</h4>
           <ol>
             <li>Set all vertices distances = infinity except for the 
               source vertex, set the source distance = 0.</li>
