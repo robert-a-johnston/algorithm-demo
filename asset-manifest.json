@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/algorithm-demo/static/css/main.911bef03.chunk.css",
-    "main.js": "/algorithm-demo/static/js/main.ad839a36.chunk.js",
-    "main.js.map": "/algorithm-demo/static/js/main.ad839a36.chunk.js.map",
+    "main.css": "/algorithm-demo/static/css/main.8a5f63c7.chunk.css",
+    "main.js": "/algorithm-demo/static/js/main.be228410.chunk.js",
+    "main.js.map": "/algorithm-demo/static/js/main.be228410.chunk.js.map",
     "runtime-main.js": "/algorithm-demo/static/js/runtime-main.0a7fc3db.js",
     "runtime-main.js.map": "/algorithm-demo/static/js/runtime-main.0a7fc3db.js.map",
     "static/js/2.0798161b.chunk.js": "/algorithm-demo/static/js/2.0798161b.chunk.js",
     "static/js/2.0798161b.chunk.js.map": "/algorithm-demo/static/js/2.0798161b.chunk.js.map",
     "index.html": "/algorithm-demo/index.html",
-    "static/css/main.911bef03.chunk.css.map": "/algorithm-demo/static/css/main.911bef03.chunk.css.map",
+    "static/css/main.8a5f63c7.chunk.css.map": "/algorithm-demo/static/css/main.8a5f63c7.chunk.css.map",
     "static/js/2.0798161b.chunk.js.LICENSE.txt": "/algorithm-demo/static/js/2.0798161b.chunk.js.LICENSE.txt",
     "static/media/bubbleSortAlgo.8146cbc2.JPG": "/algorithm-demo/static/media/bubbleSortAlgo.8146cbc2.JPG",
     "static/media/mergeSortAlgo.b0ceeec9.JPG": "/algorithm-demo/static/media/mergeSortAlgo.b0ceeec9.JPG",
@@ -17,7 +17,7 @@
   "entrypoints": [
     "static/js/runtime-main.0a7fc3db.js",
     "static/js/2.0798161b.chunk.js",
-    "static/css/main.911bef03.chunk.css",
-    "static/js/main.ad839a36.chunk.js"
+    "static/css/main.8a5f63c7.chunk.css",
+    "static/js/main.be228410.chunk.js"
   ]
 }
