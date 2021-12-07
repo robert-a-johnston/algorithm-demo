@@ -11,26 +11,35 @@ export default function DepthFirstSearchInfo() {
       <div className="container">
         <div className="algo-info">
           <h3>Time/Space Complexity</h3>
-          <p>* Depends on Implementation</p>
+          <p>* V = vertices</p>
+          <ul>
+            <li>Worst Time: O(V)</li>
+            <li>Worst Space: O(V)</li>
+          </ul>
 
-          <h4>Steps for Dijkstra's Algorithm</h4>
+          <h4>Steps for Depth First Search</h4>
           <ol>
-            <li>Set all vertices distances = infinity except for the 
-              source vertex, set the source distance = 0.</li>
-            <li>Push the source vertex in a min-priority queue in the 
-              form (distance , vertex), as the comparison in the min-priority 
-              queue will be according to vertices distances.</li>
-            <li>Pop the vertex with the minimum distance from the priority 
-              queue (at first the popped vertex = source).</li>
-            <li>Update the distances of the connected vertices to the popped 
-              vertex in case of "current vertex distance + edge weight less 
-              than next vertex distance", then push the vertex
-              with the new distance to the priority queue.
-            </li>
-            <li>If the popped vertex is visited before, just continue without using it.</li>
-            <li>Apply the same algorithm again until the priority queue is empty.</li>
+            <li>Given a graph and start node and end node.</li>
+            <li>Create STACK for vertices visited</li>
+            <li>Put first node(start node) in visited stack.</li>
+            <li>While stack is not empty.</li>
+              <ol type="a">
+                <li>Select unvisited adjacent node from first item</li>
+                <li>Mark node as visited by adding it to the stack.</li>
+                <li>Repeat above steps until you reach a node has no 
+                  unvisited child nodes.
+                </li>
+                <li>Pop node  with no unvisited child nodes from stack</li>
+                <li>Repeat above with each node in stack, until all nodes are
+                  visited.
+                </li>
+                <li> When find end node return stack.  This is the path for 
+                  nodes traveled to get to end node.
+                </li>
+              </ol>
+            <li>End while loop.</li>
+            <li>If you never find the end node return no way to get to node.</li>
           </ol>
-
         </div>
       </div>
     </div>
