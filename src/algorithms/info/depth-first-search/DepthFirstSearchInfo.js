@@ -6,7 +6,10 @@ import './DepthFirstSearchInfo.css'
 export default function DepthFirstSearchInfo() {
   return (
     <div>
-      <h2>Depth First Search Algorithm</h2>
+      <h2>
+        <a href="https://en.wikipedia.org/wiki/Depth-first_search#:~:text=Depth%2Dfirst%20search%20(DFS),along%20each%20branch%20before%20backtracking."
+        target="_blank" rel="noreferrer">
+          Depth First Search Algorithm</a></h2>
       
       <div className="container">
         <div className="algo-info">

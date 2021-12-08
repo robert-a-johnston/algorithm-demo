@@ -6,7 +6,9 @@ import './BreathFirstSearhInfo.css'
 export default function DijkstraInfo() {
   return (
     <div>
-      <h2>Breath First Search Algorithm</h2>
+      <h2><a
+        href="https://en.wikipedia.org/wiki/Breadth-first_search" target="_blank" rel="noreferrer"
+         >Breath First Search Algorithm</a></h2>
       
       <div className="container">
         <div className="algo-info">
