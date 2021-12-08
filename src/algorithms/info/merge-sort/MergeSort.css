@@ -1,18 +1,16 @@
 .container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
 }
-.algo-pic {
-  width: 45%;
-  height: 250px;
-}
-.algo-info {
-  width: 55%;
-
-}
+/* .algo-pic {
+  height: auto;
+  width: 100%;
+} */
 .merge-sort-img {
-  max-width: 100%;
-  height: 100%;
+ width: 90vw;
+ resize: both;
 }
 ul {
   text-align: left;

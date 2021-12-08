@@ -9,9 +9,7 @@ export default function MergeSortInfo() {
 
       <div className="container">
         
-          <div className="algo-pic">
-            <img className="merge-sort-img" src={mergeSortAlgo} alt="Merge Sort Algorithm"></img>     
-          </div>
+          
         <div className="algo-info">
 
           <h3>Time/Space Complexity</h3>
@@ -32,6 +30,9 @@ export default function MergeSortInfo() {
           </ol>
 
         </div>
+      </div>
+      <div className="algo-pic">
+        <img className="merge-sort-img" src={mergeSortAlgo} alt="Merge Sort Algorithm"></img>     
       </div>
     </div>
   )
