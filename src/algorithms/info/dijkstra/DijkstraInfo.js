@@ -6,7 +6,8 @@ import './DijkstraInfo.css'
 export default function DijkstraInfo() {
   return (
     <div>
-      <h2>Dijkstra's Algorithm</h2>
+      <h2><a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm" target="_blank" rel="noreferrer">
+        Dijkstra's Algorithm</a></h2>
       
       <div className="container">
         <div className="algo-info">

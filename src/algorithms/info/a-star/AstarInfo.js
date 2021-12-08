@@ -6,7 +6,8 @@ import './AstarInfo.css'
 export default function AstarInfo() {
   return (
     <div>
-      <h2>A * Algorithm</h2>
+      <h2><a href="https://en.wikipedia.org/wiki/A*_search_algorithm" target="_blank" rel="noreferrer">
+        A * Algorithm</a></h2>
       
       <div className="container">
         <div className="algo-info">
