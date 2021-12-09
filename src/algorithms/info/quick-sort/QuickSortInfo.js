@@ -10,19 +10,15 @@ export default function QuickSortInfo() {
       
       <div className="container">
 
-          <div className="algo-pic">
-            <img className="quicksort-img" src={quickSortAlgo} alt="Quick Sort Algorithm"></img>     
-          </div>
-
         <div className="algo-info">
-          <h3>Time/Space Complexity</h3>
+          <h3><u>Time/Space Complexity</u></h3>
           <ul>
             <li>Average Time: O(n log(n))</li>  
             <li>Worst Time: O(n^2)</li>
             <li>Space: O(log(n))</li>
           </ul>
 
-          <h4>Steps for QuickSort</h4>
+          <h4><u>Steps for QuickSort</u></h4>
           <ol>
             <li>Select pivot.  Can select any element(first/last/middle)</li>
             <li>Start left pointer at first element and right pointer at last element.</li>
@@ -37,6 +33,9 @@ export default function QuickSortInfo() {
           </ol>
 
         </div>
+      </div>
+      <div className="algo-pic">
+            <img className="quicksort-img" src={quickSortAlgo} alt="Quick Sort Algorithm"></img>     
       </div>
     </div>
   )
