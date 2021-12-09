@@ -13,10 +13,9 @@ const Header = () => (
           <NavLink className="nav-link" to="/">Home</NavLink>
           <NavLink className="nav-link" to="/sort">Sorter</NavLink>
           <NavLink className="nav-link" to="/path">PathFinder
-            {/* <span className="span-link" onClick= {
-              e=> { e.stopPropagation()}
-            }>PathFinder</span> */}
           </NavLink>
+          <a className="nav-link" href="https://robert-a-johnston.github.io/"
+            target="_blank" rel="noreferrer">Portfolio</a>
         </Nav>     
     </Navbar>
   </div>

@@ -4,6 +4,7 @@ import './App.css';
 import Header from './components/header/Header'
 import SortDisplay from './components/sort-display/SortDisplay';
 import Graph from './components/path-finder/graph/Graph'
+import Home from './components/home/Home';
 
 
 function App() {
@@ -13,6 +14,10 @@ function App() {
         <Header/>
         <main>
         <Routes>
+          <Route
+            path='/'
+            element={<Home/>}/>
+            
           <Route
             path='/sort'
             element={<SortDisplay/>}/>

@@ -12,3 +12,8 @@ h1 {
 .nav-link{
   color: rgb(79, 169, 221);
 }
+.top{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}

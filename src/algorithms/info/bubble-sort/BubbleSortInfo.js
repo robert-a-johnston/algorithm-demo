@@ -10,19 +10,15 @@ export default function BubbleSortInfo() {
       
       <div className="container">
 
-          <div className="algo-pic">
-            <img className="bubble-sort-img" src={bubbleSortAlgo} alt="Bubble Sort Algorithm"></img>     
-          </div>
-
         <div className="algo-info">
-          <h3>Time/Space Complexity</h3>
+          <h3><u>Time/Space Complexity</u></h3>
           <ul>
             <li>Average Time: O(n^2)</li>  
             <li>Worst Time: O(n^2)</li>
             <li>Space: O(1)</li>
           </ul>
 
-          <h4>Steps for BubbleSort</h4>
+          <h4><u>Steps for BubbleSort</u></h4>
           <ol>
             <li>Start at first item in unsorted array.</li>
             <li>Check if the next item is less than first item.</li>
@@ -34,6 +30,10 @@ export default function BubbleSortInfo() {
           </ol>
 
         </div>
+      </div>
+
+      <div className="algo-pic">
+            <img className="bubble-sort-img" src={bubbleSortAlgo} alt="Bubble Sort Algorithm"></img>     
       </div>
     </div>
   )

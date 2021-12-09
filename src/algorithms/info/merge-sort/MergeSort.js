@@ -12,14 +12,14 @@ export default function MergeSortInfo() {
           
         <div className="algo-info">
 
-          <h3>Time/Space Complexity</h3>
+          <h3><u>Time/Space Complexity</u></h3>
           <ul>
             <li>Average Time: O(n log(n))</li>  
             <li>Worst Time: O(n log(n))</li>
             <li>Space: O(n)</li>
           </ul>
       
-          <h4>Steps for MergeSort</h4>
+          <h4><u>Steps for MergeSort</u></h4>
           <ol>
             <li>Split given array in half.</li>
             <li>Recursively divide sub-arrays in half until you are left with an array 
