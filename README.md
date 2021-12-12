@@ -26,6 +26,9 @@ The developer decided to visually show how the algorithms work to better underst
 - React
 - HTML
 - CSS
-## WIRE-FRAMES
-## SCREEN SHOTS
+
+## SCREEN SHOT
+![Algorithm Fun](public/algorithmFun.png)
 ## FUTURE DEVELOPMENT PLANS
+- Rewrite/redesign some of the algorithm information so that it is more standard in format.
+- Add other algorithms/implementations
