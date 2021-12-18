@@ -3,7 +3,7 @@ Algorithm Demo is an application that lets a user see a visual representation of
 sorting and path finding algorithms.  The application also provides some information and links
 to more information about each algorithm.
 ## INSTALLATION INSTRUCTIONS
-- Clone this project.
+- Fork and clone this project.
 - Run ``npm install`` to install dependencies.
 - Run ``npm start`` to run development server.
 ## IMPORTANT LINKS
